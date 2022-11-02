@@ -1,0 +1,13 @@
+[Unit]
+Description=Periodically run the notion RSS service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/loric/src/notion/rss
+EnvironmentFile=/home/loric/src/notion/rss/.env
+ExecStart=/usr/bin/node ./index.js
+Restart=always
+RestartSec=5min
+
+[Install]
+WantedBy=multi-user.target
