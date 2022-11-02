@@ -2,6 +2,7 @@ const { Client, collectPaginatedAPI } = require('@notionhq/client');
 const { get } = require('axios');
 const { parseString } = require('xml2js');
 let Parser = require('rss-parser');
+require('dotenv').config();
 
 // Initializing a client
 const notion = new Client({
