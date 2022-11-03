@@ -1,5 +1,4 @@
 const { Client, collectPaginatedAPI } = require('@notionhq/client');
-const { parseString } = require('xml2js');
 let Parser = require('rss-parser');
 require('dotenv').config();
 
@@ -25,6 +24,11 @@ function addFeedItemsToDatabase(feed, databaseId) {
           },
           URL: {
             url: item.link
+          },
+          'Publication Date': {
+            date: {
+              start: (new Date(Date.parse(item.pubDate))).toISOString()
+            }
           },
           Source: {
             rich_text: [{

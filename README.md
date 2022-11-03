@@ -15,7 +15,7 @@ This allows us to interact only with notion itself once the setup is done.
 
 The target database requires the following fields:
 - `Name`
-- `Created Time` (for sorting and filtering)
+- `Publication Date`, a `date` field (for sorting and filtering)
 - `URL`, a `link` field
 - `Source`, a `text` field
 
