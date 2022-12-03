@@ -18,6 +18,14 @@ function addFeedItemsToDatabase(feed, databaseId) {
         .filter(item => {
           return (Date.parse(item.pubDate) > last_fetched);
         }).forEach(item => {
+        // Test if an item with the same link is in the database
+        let current = collectPaginatedAPI(notion.databases.query, {
+            database_id: databaseId,
+            filter: {
+              property: "URL",
+              url: item.link
+            }
+          })[0];
         let properties = {
           Name: {
             title: [{ type: "text", text: { content: item.title } }],
@@ -48,11 +56,20 @@ function addFeedItemsToDatabase(feed, databaseId) {
             }
           }
         }
-        notion.pages.create({
-          parent: { database_id: databaseId },
-          properties: properties,
-          cover: cover
-        });
+        if (current) {
+            notion.pages.update({
+              parent: { database_id: databaseId },
+              page_id: current.id,
+              properties: properties,
+              cover: cover
+            })
+        } else {
+          notion.pages.create({
+            parent: { database_id: databaseId },
+            properties: properties,
+            cover: cover
+          });
+        }
       })
       return '';
     },
